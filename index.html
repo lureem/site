@@ -3362,6 +3362,7 @@ function renderProducts(){
       </div>
     </div>
   `;}).join('');
+  grid.classList.add('in-view'); /* ضمان ظهور المنتجات فورًا بدل الاعتماد على مراقب السكرول فقط */
 }
 
 function onSortChange(val){
