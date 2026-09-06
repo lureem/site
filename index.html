@@ -189,6 +189,13 @@
     transition:transform .3s, box-shadow .3s;
   }
   .p-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
+  .p-card-mini{cursor:pointer;}
+  .p-card-mini .p-body{padding:14px; text-align:center;}
+  .p-card-mini .p-name{
+    font-size:.95rem; margin:0 0 6px; line-height:1.3; min-height:0;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .p-card-mini .p-price{font-size:1.1rem;}
   .p-image{
     height:220px; display:flex; align-items:center; justify-content:center; font-size:3.4rem; position:relative;
     background:linear-gradient(135deg, var(--blush), var(--bg));
@@ -1108,7 +1115,8 @@
     .hero-stats{justify-content:center;}
     .hero-visual{height:320px; margin-top:20px;}
     .hero-logo{width:230px; height:230px;}
-    .cats, .products, .testis{grid-template-columns:1fr;}
+    .cats, .testis{grid-template-columns:1fr;}
+    .products{grid-template-columns:repeat(3,1fr); gap:14px;}
     .f-grid{grid-template-columns:1fr 1fr;}
     .about-vm-grid{grid-template-columns:1fr;}
     .about-name-split{flex-direction:column;}
@@ -1161,10 +1169,20 @@
     .sort-wrap{width:100%; justify-content:space-between;}
     .sort-select{flex:1; min-width:0;}
 
-    .p-image{height:170px; font-size:2.6rem;}
-    .p-body{padding:16px;}
-    .p-name{font-size:1.05rem;}
-    .qv-btn{font-size:.7rem; padding:7px 14px;}
+    /* ---- Noon-style compact product grid on phones ---- */
+    .products{grid-template-columns:repeat(4,1fr); gap:8px;}
+    .p-card{border-radius:10px;}
+    .p-card:hover{transform:none;}
+    .p-image{height:80px; font-size:1.4rem;}
+    .p-badge{top:5px; right:5px; font-size:.5rem; padding:2px 6px;}
+    html.lang-en .p-badge{left:5px;}
+    .p-card-mini .p-body{padding:6px; text-align:center;}
+    .p-card-mini .p-name{
+      font-size:.68rem; margin:0 0 3px; line-height:1.25; min-height:2.1em;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    }
+    .p-card-mini .p-price{font-size:.72rem;}
+    .p-card-mini .p-price small{display:block; font-size:.58rem; margin-inline-start:0;}
 
     .promo{padding:40px 16px; margin:16px 0;}
     .promo h2{font-size:1.5rem;}
@@ -1291,6 +1309,120 @@
     </div>
   </div>
 </header>
+
+
+<section class="section" id="products">
+  <div class="section-head">
+    <div class="eyebrow" data-i18n="best_eyebrow">الأكثر مبيعاً</div>
+    <h2 data-i18n="best_title">منتجاتنا المختارة</h2>
+    <p data-i18n="best_desc">كل قطعة اتختارت بعناية عشان تضمنلك جودة وإطلالة مميزة</p>
+  </div>
+
+  <div class="products-toolbar">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all" data-i18n="filter_all" onclick="filterCat('all', this)">الكل</button>
+      <button class="filter-btn" data-filter="accessories" data-i18n="cat_accessories" onclick="filterCat('accessories', this)">اكسسوارات</button>
+      <button class="filter-btn" data-filter="perfumes" data-i18n="cat_perfumes" onclick="filterCat('perfumes', this)">برفيومات</button>
+      <button class="filter-btn" data-filter="skincare" data-i18n="cat_skincare" onclick="filterCat('skincare', this)">سكين كير</button>
+    </div>
+    <div class="filters" id="subFilters" style="display:none;">
+      <button class="filter-btn sub-filter-btn active" data-subfilter="all" data-i18n="sub_all" onclick="filterSub('all', this)">الكل</button>
+      <button class="filter-btn sub-filter-btn" data-subfilter="rings" data-i18n="sub_rings" onclick="filterSub('rings', this)">خواتم</button>
+      <button class="filter-btn sub-filter-btn" data-subfilter="chains" data-i18n="sub_chains" onclick="filterSub('chains', this)">سلاسل</button>
+      <button class="filter-btn sub-filter-btn" data-subfilter="bracelets" data-i18n="sub_bracelets" onclick="filterSub('bracelets', this)">أساور</button>
+      <button class="filter-btn sub-filter-btn" data-subfilter="handchain" data-i18n="sub_handchain" onclick="filterSub('handchain', this)">هاند تشين</button>
+      <button class="filter-btn sub-filter-btn" data-subfilter="combo" data-i18n="sub_combo" onclick="filterSub('combo', this)">كومبو</button>
+    </div>
+    <div class="sort-wrap">
+      <label data-i18n="sort_label">ترتيب حسب</label>
+      <select class="sort-select" id="sortSelect" onchange="onSortChange(this.value)">
+        <option value="default" data-i18n="sort_default">الأكثر تميزاً</option>
+        <option value="price_asc" data-i18n="sort_price_asc">السعر: من الأقل للأعلى</option>
+        <option value="price_desc" data-i18n="sort_price_desc">السعر: من الأعلى للأقل</option>
+        <option value="rating" data-i18n="sort_rating">الأعلى تقييماً</option>
+        <option value="newest" data-i18n="sort_newest">الأحدث</option>
+      </select>
+    </div>
+    <button class="adv-filters-toggle" onclick="toggleAdvFilters()">⚙️ <span data-i18n="adv_filters_btn">فلاتر متقدمة</span></button>
+  </div>
+
+  <div class="adv-filters-panel" id="advFiltersPanel">
+    <div class="price-range-wrap">
+      <label><span data-i18n="filter_price_label">السعر حتى</span> <strong id="priceRangeVal"></strong></label>
+      <input type="range" id="priceRangeInput" min="0" max="0" step="10" oninput="onPriceRangeChange(this.value)">
+    </div>
+    <span class="adv-filters-divider"></span>
+    <div class="rating-filter-wrap">
+      <label data-i18n="filter_rating_label">الحد الأدنى للتقييم</label>
+      <select id="ratingFilterSelect" onchange="onRatingFilterChange(this.value)">
+        <option value="0" data-i18n="rating_all">الكل</option>
+        <option value="3" data-i18n="rating_3">⭐ 3+</option>
+        <option value="4" data-i18n="rating_4">⭐ 4+</option>
+        <option value="4.5" data-i18n="rating_45">⭐ 4.5+</option>
+      </select>
+    </div>    <span class="adv-reset-link" onclick="resetAdvFilters()" data-i18n="adv_reset">إعادة ضبط</span>
+  </div>
+
+  <div class="products reveal" id="productsGrid"></div>
+</section>
+
+<section class="rv-section" id="recentlyViewedSection" style="display:none;">
+  <div class="section-head">
+    <div class="eyebrow" data-i18n="rv_eyebrow">تصفحتِ مؤخراً</div>
+    <h2 data-i18n="rv_title">استكملي اللي شفتيه</h2>
+  </div>
+  <div class="rv-track" id="rvTrack"></div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-item"><span class="ic">🚚</span><span data-i18n="trust_ship">توصيل لكل محافظات مصر</span></div>
+  <div class="trust-item"><span class="ic">🔒</span><span data-i18n="trust_secure">دفع آمن 100%</span></div>
+  <div class="trust-item"><span class="ic">↩️</span><span data-i18n="trust_return">استبدال خلال 14 يوم</span></div>
+  <div class="trust-item"><span class="ic">✅</span><span data-i18n="trust_authentic">منتجات أصلية مضمونة</span></div>
+</div>
+
+<div class="promo">
+  <div class="wrap">
+    <h2 data-i18n="promo_title">وفري 15% على أول أوردر ليكي</h2>
+    <p data-i18n="promo_desc">سجلي إيميلك في النشرة البريدية وخدي كود الخصم فوراً</p>
+    <a href="javascript:void(0)" onclick="goTo('newsletter')" class="btn btn-outline" data-i18n="promo_cta">اشتركي الآن</a>
+  </div>
+</div>
+
+<section class="section" id="reviews">
+  <div class="section-head reveal">
+    <div class="eyebrow" data-i18n="rev_eyebrow">آراء العملاء</div>
+    <h2 data-i18n="rev_title">إيه رأي عميلاتنا فينا</h2>
+  </div>
+  <div class="testis reveal">
+    <div class="t-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text" data-i18n="rev1">"البرفيوم ثابت جداً وريحته بتفضل طول اليوم. هطلب تاني أكيد!"</p>
+      <div class="t-user"><div class="t-avatar">م</div> <span data-i18n="rev1_name">مريم أحمد</span></div>
+    </div>
+    <div class="t-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text" data-i18n="rev2">"سيروم فيتامين سي غيرلي بشرتي فعلاً خلال شهر بس. جودة عالية."</p>
+      <div class="t-user"><div class="t-avatar">س</div> <span data-i18n="rev2_name">سارة محمود</span></div>
+    </div>
+    <div class="t-card">
+      <div class="t-stars">★★★★☆</div>
+      <p class="t-text" data-i18n="rev3">"الشحن سريع والتغليف حلو جداً. الإكسسوارات أحلى من الصور!"</p>
+      <div class="t-user"><div class="t-avatar">ن</div> <span data-i18n="rev3_name">نور الهدى</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="newsletter">
+  <div class="newsletter reveal">
+    <h2 data-i18n="news_title">خليكي أول من يعرف 💌</h2>
+    <p data-i18n="news_desc">اشتركي في النشرة البريدية وخدي عروض حصرية وكود خصم 15%</p>
+    <form class="n-form" onsubmit="subscribe(event)">
+      <input type="email" id="emailInput" data-i18n-ph="news_ph" placeholder="بريدك الإلكتروني" required>
+      <button type="submit" class="btn btn-primary" data-i18n="news_btn">اشتراك</button>
+    </form>
+  </div>
+</section>
 
 <section class="hero" id="home">
   <div>
@@ -1437,119 +1569,6 @@
     <p data-i18n="bundles_desc">مجموعات جاهزة اخترناها بعناية عشان توفري وتديها كهدية جاهزة</p>
   </div>
   <div class="bundles-grid" id="bundlesGrid"></div>
-</section>
-
-<section class="section" id="products">
-  <div class="section-head">
-    <div class="eyebrow" data-i18n="best_eyebrow">الأكثر مبيعاً</div>
-    <h2 data-i18n="best_title">منتجاتنا المختارة</h2>
-    <p data-i18n="best_desc">كل قطعة اتختارت بعناية عشان تضمنلك جودة وإطلالة مميزة</p>
-  </div>
-
-  <div class="products-toolbar">
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all" data-i18n="filter_all" onclick="filterCat('all', this)">الكل</button>
-      <button class="filter-btn" data-filter="accessories" data-i18n="cat_accessories" onclick="filterCat('accessories', this)">اكسسوارات</button>
-      <button class="filter-btn" data-filter="perfumes" data-i18n="cat_perfumes" onclick="filterCat('perfumes', this)">برفيومات</button>
-      <button class="filter-btn" data-filter="skincare" data-i18n="cat_skincare" onclick="filterCat('skincare', this)">سكين كير</button>
-    </div>
-    <div class="filters" id="subFilters" style="display:none;">
-      <button class="filter-btn sub-filter-btn active" data-subfilter="all" data-i18n="sub_all" onclick="filterSub('all', this)">الكل</button>
-      <button class="filter-btn sub-filter-btn" data-subfilter="rings" data-i18n="sub_rings" onclick="filterSub('rings', this)">خواتم</button>
-      <button class="filter-btn sub-filter-btn" data-subfilter="chains" data-i18n="sub_chains" onclick="filterSub('chains', this)">سلاسل</button>
-      <button class="filter-btn sub-filter-btn" data-subfilter="bracelets" data-i18n="sub_bracelets" onclick="filterSub('bracelets', this)">أساور</button>
-      <button class="filter-btn sub-filter-btn" data-subfilter="handchain" data-i18n="sub_handchain" onclick="filterSub('handchain', this)">هاند تشين</button>
-      <button class="filter-btn sub-filter-btn" data-subfilter="combo" data-i18n="sub_combo" onclick="filterSub('combo', this)">كومبو</button>
-    </div>
-    <div class="sort-wrap">
-      <label data-i18n="sort_label">ترتيب حسب</label>
-      <select class="sort-select" id="sortSelect" onchange="onSortChange(this.value)">
-        <option value="default" data-i18n="sort_default">الأكثر تميزاً</option>
-        <option value="price_asc" data-i18n="sort_price_asc">السعر: من الأقل للأعلى</option>
-        <option value="price_desc" data-i18n="sort_price_desc">السعر: من الأعلى للأقل</option>
-        <option value="rating" data-i18n="sort_rating">الأعلى تقييماً</option>
-        <option value="newest" data-i18n="sort_newest">الأحدث</option>
-      </select>
-    </div>
-    <button class="adv-filters-toggle" onclick="toggleAdvFilters()">⚙️ <span data-i18n="adv_filters_btn">فلاتر متقدمة</span></button>
-  </div>
-
-  <div class="adv-filters-panel" id="advFiltersPanel">
-    <div class="price-range-wrap">
-      <label><span data-i18n="filter_price_label">السعر حتى</span> <strong id="priceRangeVal"></strong></label>
-      <input type="range" id="priceRangeInput" min="0" max="0" step="10" oninput="onPriceRangeChange(this.value)">
-    </div>
-    <span class="adv-filters-divider"></span>
-    <div class="rating-filter-wrap">
-      <label data-i18n="filter_rating_label">الحد الأدنى للتقييم</label>
-      <select id="ratingFilterSelect" onchange="onRatingFilterChange(this.value)">
-        <option value="0" data-i18n="rating_all">الكل</option>
-        <option value="3" data-i18n="rating_3">⭐ 3+</option>
-        <option value="4" data-i18n="rating_4">⭐ 4+</option>
-        <option value="4.5" data-i18n="rating_45">⭐ 4.5+</option>
-      </select>
-    </div>    <span class="adv-reset-link" onclick="resetAdvFilters()" data-i18n="adv_reset">إعادة ضبط</span>
-  </div>
-
-  <div class="products reveal" id="productsGrid"></div>
-</section>
-
-<section class="rv-section" id="recentlyViewedSection" style="display:none;">
-  <div class="section-head">
-    <div class="eyebrow" data-i18n="rv_eyebrow">تصفحتِ مؤخراً</div>
-    <h2 data-i18n="rv_title">استكملي اللي شفتيه</h2>
-  </div>
-  <div class="rv-track" id="rvTrack"></div>
-</section>
-
-<div class="trust-strip">
-  <div class="trust-item"><span class="ic">🚚</span><span data-i18n="trust_ship">توصيل لكل محافظات مصر</span></div>
-  <div class="trust-item"><span class="ic">🔒</span><span data-i18n="trust_secure">دفع آمن 100%</span></div>
-  <div class="trust-item"><span class="ic">↩️</span><span data-i18n="trust_return">استبدال خلال 14 يوم</span></div>
-  <div class="trust-item"><span class="ic">✅</span><span data-i18n="trust_authentic">منتجات أصلية مضمونة</span></div>
-</div>
-
-<div class="promo">
-  <div class="wrap">
-    <h2 data-i18n="promo_title">وفري 15% على أول أوردر ليكي</h2>
-    <p data-i18n="promo_desc">سجلي إيميلك في النشرة البريدية وخدي كود الخصم فوراً</p>
-    <a href="javascript:void(0)" onclick="goTo('newsletter')" class="btn btn-outline" data-i18n="promo_cta">اشتركي الآن</a>
-  </div>
-</div>
-
-<section class="section" id="reviews">
-  <div class="section-head reveal">
-    <div class="eyebrow" data-i18n="rev_eyebrow">آراء العملاء</div>
-    <h2 data-i18n="rev_title">إيه رأي عميلاتنا فينا</h2>
-  </div>
-  <div class="testis reveal">
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-text" data-i18n="rev1">"البرفيوم ثابت جداً وريحته بتفضل طول اليوم. هطلب تاني أكيد!"</p>
-      <div class="t-user"><div class="t-avatar">م</div> <span data-i18n="rev1_name">مريم أحمد</span></div>
-    </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-text" data-i18n="rev2">"سيروم فيتامين سي غيرلي بشرتي فعلاً خلال شهر بس. جودة عالية."</p>
-      <div class="t-user"><div class="t-avatar">س</div> <span data-i18n="rev2_name">سارة محمود</span></div>
-    </div>
-    <div class="t-card">
-      <div class="t-stars">★★★★☆</div>
-      <p class="t-text" data-i18n="rev3">"الشحن سريع والتغليف حلو جداً. الإكسسوارات أحلى من الصور!"</p>
-      <div class="t-user"><div class="t-avatar">ن</div> <span data-i18n="rev3_name">نور الهدى</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="newsletter">
-  <div class="newsletter reveal">
-    <h2 data-i18n="news_title">خليكي أول من يعرف 💌</h2>
-    <p data-i18n="news_desc">اشتركي في النشرة البريدية وخدي عروض حصرية وكود خصم 15%</p>
-    <form class="n-form" onsubmit="subscribe(event)">
-      <input type="email" id="emailInput" data-i18n-ph="news_ph" placeholder="بريدك الإلكتروني" required>
-      <button type="submit" class="btn btn-primary" data-i18n="news_btn">اشتراك</button>
-    </form>
-  </div>
 </section>
 
 <footer id="footer">
@@ -3339,26 +3358,14 @@ function renderProducts(){
     const wasPrice = onDeal ? p.price : p.old;
     const ratingInfo = getRatingInfo(p);
     return `
-    <div class="p-card ${p.stock === 'out' ? 'out' : ''}" id="product-${p.id}">
-      <div class="p-image" onclick="openQuickView(${p.id})">
+    <div class="p-card p-card-mini ${p.stock === 'out' ? 'out' : ''}" id="product-${p.id}" onclick="openQuickView(${p.id})">
+      <div class="p-image">
         ${onDeal ? `<span class="p-badge deal-badge">🔥 ${t('deal_badge')}</span>` : (p.badge ? `<span class="p-badge">${p.badge[currentLang]}</span>` : '')}
-        <button class="fav-btn ${wishlist.includes(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishItem(${p.id})">${wishlist.includes(p.id) ? '❤️' : '🤍'}</button>
-        <button class="compare-btn ${compareList.includes(p.id) ? 'active' : ''}" title="${t('compare_btn_title')}" onclick="event.stopPropagation(); toggleCompareItem(${p.id})">⚖️</button>
         ${pVisual(p)}
-        <span class="qv-btn" onclick="event.stopPropagation(); openQuickView(${p.id})">${t('quick_view')}</span>
       </div>
       <div class="p-body">
-        <div class="p-cat">${t('cat_' + p.cat)}</div>
         <div class="p-name">${p.name[currentLang]}</div>
-        <div class="p-rating"><span class="stars">${renderStars(ratingInfo.avg)}</span><span class="rcount">${ratingInfo.avg} (${ratingInfo.count})</span></div>
-        <div class="p-desc">${p.desc[currentLang]}</div>
-        ${stockBadgeHtml(p.stock, p.stockCount)}
-        <div class="p-foot">
-          <div class="p-price">${price} ${t('currency')} ${wasPrice ? `<small>${wasPrice} ${t('currency')}</small>` : ''}</div>
-          ${p.stock === 'out'
-            ? `<button class="notify-btn" style="padding:8px 12px; font-size:.7rem;" onclick="toggleNotifyModal(true, ${p.id})">🔔</button>`
-            : `<button class="add-btn" onclick="addToCart(${p.id})">+</button>`}
-        </div>
+        <div class="p-price">${price} ${t('currency')} ${wasPrice ? `<small>${wasPrice} ${t('currency')}</small>` : ''}</div>
       </div>
     </div>
   `;}).join('');
