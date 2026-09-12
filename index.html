@@ -115,8 +115,11 @@
   }
   .btn-primary{background:var(--rose-deep); color:#fff; box-shadow:var(--shadow);}
   .btn-primary:hover{transform:translateY(-3px); background:var(--rose);}
+  .btn:active{transform:scale(.96); transition:transform .1s ease, box-shadow .1s ease;}
+  .btn-primary:active{background:var(--rose-deep); box-shadow:0 4px 14px -6px rgba(194,24,91,.55);}
   .btn-outline{background:transparent; border:1.5px solid var(--rose-deep); color:var(--rose-deep);}
   .btn-outline:hover{background:var(--rose-deep); color:#fff;}
+  .btn-outline:active{background:var(--rose-deep); color:#fff;}
   .hero-stats{display:flex; gap:34px; margin-top:44px;}
   .hero-stats div strong{display:block; font-family:'Lalezar'; font-size:1.6rem; color:var(--rose-deep);}
   html.lang-en .hero-stats div strong{font-family:'Marcellus', serif;}
@@ -1272,6 +1275,128 @@
     .about-promise{padding:30px 22px;}
     .about-slogan{font-size:1.25rem;}
   }
+
+  /* ---- Premium additions: trust bar, installments, gift wrap, image zoom ---- */
+  .trust-bar{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1180px; margin:0 auto; padding:26px 24px;
+  }
+  .trust-item{
+    display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:14px 16px; box-shadow:0 8px 20px -14px rgba(194,24,91,.2);
+  }
+  .trust-item .ti-icon{font-size:1.5rem; flex-shrink:0;}
+  .trust-item .ti-text strong{display:block; font-size:.82rem; color:var(--plum);}
+  .trust-item .ti-text span{display:block; font-size:.72rem; color:var(--label-muted); margin-top:2px;}
+  html.dark .trust-item{background:#241a20;}
+  @media(max-width:900px){ .trust-bar{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:520px){ .trust-bar{padding:16px 14px; gap:10px;} .trust-item{padding:10px 12px;} .trust-item .ti-icon{font-size:1.2rem;} }
+
+  .installment-badge{
+    display:inline-flex; align-items:center; gap:5px; font-size:.7rem; font-weight:700; color:var(--rose-deep);
+    background:var(--blush); padding:3px 9px; border-radius:99px; margin-inline-start:6px; vertical-align:middle;
+  }
+  html.dark .installment-badge{background:#3a2331; color:var(--gold);}
+  .qv-price .installment-badge{display:inline-block; margin-top:6px; margin-inline-start:0;}
+
+  .gift-option{
+    border:1px dashed var(--gold); border-radius:14px; padding:12px 14px; margin:14px 0; background:rgba(207,161,94,.08);
+  }
+  .gift-option .go-row{display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:700; font-size:.9rem;}
+  .gift-option .go-row input{width:18px; height:18px; accent-color:var(--rose);}
+  .gift-option .go-sub{font-size:.75rem; color:var(--label-muted); margin-top:2px; font-weight:400;}
+  .gift-option textarea{
+    width:100%; margin-top:10px; border:1px solid var(--line); border-radius:10px; padding:10px; font-family:inherit;
+    resize:vertical; display:none; background:var(--card); color:var(--plum);
+  }
+  .gift-option.active textarea{display:block;}
+
+  #qvVisual{overflow:hidden; cursor:zoom-in;}
+  #qvVisual .prod-photo{transition:transform .45s ease;}
+  #qvVisual:hover .prod-photo{transform:scale(1.18);}
+
+  /* ---- Amazon/Jumia-style additions: delivery estimate, payment methods, FBT, Q&A ---- */
+  .delivery-est{
+    display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--rose-deep); background:var(--blush);
+    padding:8px 12px; border-radius:12px; margin:10px 0; font-weight:700;
+  }
+  html.dark .delivery-est{background:#3a2331; color:var(--gold);}
+
+  .payment-methods{display:flex; flex-direction:column; gap:10px; margin:6px 0 14px;}
+  .pm-option{
+    display:flex; align-items:center; gap:10px; border:1px solid var(--line); border-radius:12px; padding:10px 14px;
+    cursor:pointer; font-size:.86rem; font-weight:700; transition:border-color .15s, background .15s;
+  }
+  .pm-option input{accent-color:var(--rose); width:17px; height:17px;}
+  .pm-option.selected{border-color:var(--rose); background:rgba(194,24,91,.06);}
+  html.dark .pm-option.selected{background:rgba(207,161,94,.1);}
+  .pm-option .pm-icon{font-size:1.15rem;}
+  .pm-option .pm-sub{font-weight:400; font-size:.72rem; color:var(--label-muted); display:block; margin-top:1px;}
+
+  .fbt-section{margin-top:22px; border-top:1px solid var(--line); padding-top:18px;}
+  .fbt-section h4{font-size:.95rem; color:var(--rose-deep); margin-bottom:12px;}
+  .fbt-items{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+  .fbt-item{display:flex; flex-direction:column; align-items:center; gap:6px; width:78px; text-align:center;}
+  .fbt-item .fbt-icon{
+    width:64px; height:64px; border-radius:14px; background:var(--bg); display:flex; align-items:center;
+    justify-content:center; font-size:1.7rem; position:relative; overflow:hidden;
+  }
+  .fbt-item .fbt-icon .prod-photo{position:static; width:100%; height:100%; object-fit:cover; border-radius:14px;}
+  .fbt-item label{font-size:.66rem; display:flex; align-items:center; gap:3px; line-height:1.3;}
+  .fbt-item .fbt-price{font-size:.68rem; color:var(--label-muted);}
+  .fbt-plus{font-size:1.3rem; color:var(--gold); font-weight:700; padding-bottom:20px;}
+  .fbt-footer{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bg);
+    border-radius:14px; padding:12px 16px; flex-wrap:wrap;
+  }
+  .fbt-total{font-weight:800; color:var(--rose-deep); font-size:.9rem;}
+  .fbt-total small{display:block; font-weight:400; color:var(--label-muted); font-size:.68rem;}
+
+  .qa-item{padding:12px 0; border-bottom:1px solid var(--line);}
+  .qa-item:last-child{border-bottom:none;}
+  .qa-item .qa-q{font-weight:700; font-size:.85rem; color:var(--plum); display:flex; gap:6px;}
+  .qa-item .qa-a{font-size:.8rem; color:#7c5c6a; margin-top:6px; padding-inline-start:14px; border-inline-start:2px solid var(--gold);}
+  .qa-item .qa-meta{font-size:.68rem; color:#a9899a; margin-top:4px;}
+
+  /* ---- Mobile-optimized checkout & payment flow ---- */
+  .checkout-foot{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding-bottom:calc(22px + env(safe-area-inset-bottom, 0px));
+  }
+  .checkout-foot-total{display:flex; flex-direction:column; font-size:.78rem; color:var(--label-muted); flex-shrink:0;}
+  .checkout-foot-total span:last-child{font-family:'Lalezar'; font-size:1.25rem; color:var(--rose-deep); line-height:1.3;}
+  .checkout-foot .checkout-submit-btn{flex:1; min-width:180px; min-height:50px;}
+  .checkout-submit-btn.loading{opacity:.75; pointer-events:none;}
+  .pm-option{min-height:48px;}
+
+  /* ---- Press feedback: ripple + pulse for primary CTAs ---- */
+  .cta-ripple{position:relative; overflow:hidden;}
+  .ripple-effect{
+    position:absolute; border-radius:50%; transform:scale(0); background:rgba(255,255,255,.55);
+    pointer-events:none; animation:rippleAnim .6s ease-out;
+  }
+  @keyframes rippleAnim{ to{transform:scale(2.6); opacity:0;} }
+  @keyframes ctaPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(194,24,91,.4), var(--shadow);}
+    50%{box-shadow:0 0 0 9px rgba(194,24,91,0), var(--shadow);}
+  }
+  .cta-pulse{animation:ctaPulse 2.2s ease-in-out infinite;}
+  .cta-pulse:hover, .cta-pulse:active{animation:none;}
+  @media (prefers-reduced-motion: reduce){ .cta-pulse{animation:none;} }
+
+  @media(max-width:600px){
+    /* Prevent iOS Safari auto-zoom on focus: inputs need >=16px font-size */
+    .checkout-form input, .checkout-form textarea, .n-form input, .menu-email-form input,
+    .coupon-box input, .search-top input{font-size:16px;}
+    .checkout-foot{padding:14px 18px; padding-bottom:calc(14px + env(safe-area-inset-bottom, 0px)); flex-wrap:nowrap;}
+    .checkout-foot-total{font-size:.68rem;}
+    .checkout-foot-total span:last-child{font-size:1.05rem;}
+    .checkout-foot .checkout-submit-btn{min-width:0; padding:13px 14px; font-size:.86rem;}
+    .payment-methods{gap:8px;}
+    .pm-option{padding:11px 12px; font-size:.82rem;}
+    .pm-option .pm-icon{font-size:1rem;}
+    .pm-option .pm-sub{font-size:.68rem;}
+    .drawer-body{padding-bottom:20px;}
+  }
 </style>
 </head>
 <body>
@@ -1310,6 +1435,12 @@
   </div>
 </header>
 
+<div class="trust-bar reveal">
+  <div class="trust-item"><span class="ti-icon">💎</span><div class="ti-text"><strong data-i18n="trust1_t">أصلي 100%</strong><span data-i18n="trust1_s">ضمان الجودة والمنشأ</span></div></div>
+  <div class="trust-item"><span class="ti-icon">🔒</span><div class="ti-text"><strong data-i18n="trust2_t">دفع آمن</strong><span data-i18n="trust2_s">عند الاستلام أو أونلاين</span></div></div>
+  <div class="trust-item"><span class="ti-icon">↩️</span><div class="ti-text"><strong data-i18n="trust3_t">استبدال سهل</strong><span data-i18n="trust3_s">خلال 14 يوم من الاستلام</span></div></div>
+  <div class="trust-item"><span class="ti-icon">🚚</span><div class="ti-text"><strong data-i18n="trust4_t">توصيل سريع</strong><span data-i18n="trust4_s">لكل محافظات مصر</span></div></div>
+</div>
 
 <section class="section" id="products">
   <div class="section-head">
@@ -1628,7 +1759,7 @@
     <div class="cart-subtotal-row" id="cartSubtotalRow"></div>
     <div class="cart-discount-row" id="cartDiscountRow"></div>
     <div class="cart-total"><span data-i18n="cart_total">الإجمالي</span><span id="cartTotal">0 ج.م</span></div>
-    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="openCheckoutForm()" data-i18n="cart_checkout">إتمام الشراء</button>
+    <button class="btn btn-primary cta-pulse cta-ripple" id="cartCheckoutBtn" style="width:100%; justify-content:center;" onclick="openCheckoutForm()" data-i18n="cart_checkout">إتمام الشراء</button>
   </div>
 </div>
 
@@ -1734,7 +1865,7 @@
 
 <!-- Checkout details drawer -->
 <div class="overlay" id="checkoutOverlay" onclick="toggleCheckout(false)"></div>
-<div class="drawer" id="checkoutDrawer">
+<div class="drawer checkout-drawer" id="checkoutDrawer">
   <div class="drawer-head">
     <h3 data-i18n="checkout_title">بيانات الطلب</h3>
     <button class="close-btn" onclick="toggleCheckout(false)">✕</button>
@@ -1743,19 +1874,54 @@
     <div class="order-summary" id="orderSummary"></div>
     <form id="checkoutForm" class="checkout-form" onsubmit="submitOrder(event)">
       <label data-i18n="field_name">الاسم بالكامل</label>
-      <input type="text" id="custName" required>
+      <input type="text" id="custName" name="name" autocomplete="name" required>
 
       <label data-i18n="field_phone">رقم الموبايل</label>
-      <input type="tel" id="custPhone" required>
+      <input type="tel" id="custPhone" name="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ]*" required>
 
       <label data-i18n="field_address">العنوان بالتفصيل</label>
-      <textarea id="custAddress" rows="3" required></textarea>
+      <textarea id="custAddress" name="street-address" autocomplete="street-address" rows="3" required></textarea>
+
+      <label data-i18n="payment_method_label">طريقة الدفع</label>
+      <div class="payment-methods" id="paymentMethods">
+        <label class="pm-option selected" data-pm="cod">
+          <input type="radio" name="paymentMethod" value="cod" checked onchange="selectPaymentMethod('cod')">
+          <span class="pm-icon">💵</span>
+          <span><span data-i18n="pm_cod">الدفع عند الاستلام</span><span class="pm-sub" data-i18n="pm_cod_sub">ادفعي كاش لما يوصلك الأوردر</span></span>
+        </label>
+        <label class="pm-option" data-pm="card">
+          <input type="radio" name="paymentMethod" value="card" onchange="selectPaymentMethod('card')">
+          <span class="pm-icon">💳</span>
+          <span><span data-i18n="pm_card">فيزا / ماستركارد</span><span class="pm-sub" data-i18n="pm_card_sub">هيتم تأكيد رابط الدفع عبر واتساب</span></span>
+        </label>
+        <label class="pm-option" data-pm="wallet">
+          <input type="radio" name="paymentMethod" value="wallet" onchange="selectPaymentMethod('wallet')">
+          <span class="pm-icon">📱</span>
+          <span><span data-i18n="pm_wallet">محفظة إلكترونية</span><span class="pm-sub" data-i18n="pm_wallet_sub">فودافون كاش وغيرها</span></span>
+        </label>
+      </div>
 
       <label data-i18n="field_notes">ملاحظات (اختياري)</label>
       <textarea id="custNotes" rows="2"></textarea>
 
-      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:6px;" data-i18n="confirm_order_btn">تأكيد الطلب</button>
+      <div class="gift-option" id="giftOptionBox">
+        <label class="go-row">
+          <input type="checkbox" id="giftWrapCheck" onchange="toggleGiftWrap()">
+          <span>
+            <span data-i18n="gift_wrap_title">🎁 لفي طلبك كهدية</span>
+            <span class="go-sub" id="giftWrapSub"></span>
+          </span>
+        </label>
+        <textarea id="giftMessageInput" rows="2" data-i18n-ph="gift_msg_ph" placeholder="اكتبي رسالة الإهداء هنا (اختياري)..."></textarea>
+      </div>
     </form>
+  </div>
+  <div class="drawer-foot checkout-foot">
+    <div class="checkout-foot-total">
+      <span data-i18n="cart_total">الإجمالي</span>
+      <span id="checkoutFootTotal">0 ج.م</span>
+    </div>
+    <button type="submit" form="checkoutForm" class="btn btn-primary checkout-submit-btn cta-ripple" id="checkoutSubmitBtn" style="width:100%; justify-content:center;" data-i18n="confirm_order_btn">تأكيد الطلب</button>
   </div>
 </div>
 
@@ -1922,12 +2088,30 @@ const T = {
     foot_links:"روابط سريعة", foot_service:"خدمة العملاء", foot_return:"سياسة الاستبدال", foot_shipping:"الشحن والتوصيل",
     foot_faq:"الأسئلة الشائعة", foot_contact_us:"تواصلي معنا", foot_contact:"تواصلي معنا",
     foot_loc:"📍 القاهرة، مصر", foot_hours:"🕐 يومياً 10ص - 10م", foot_copy:"© 2026 لوريم. جميع الحقوق محفوظة.",
-    cart_title:"سلة المشتريات", cart_total:"الإجمالي", cart_checkout:"إتمام الشراء",
+    cart_title:"سلة المشتريات", cart_total:"الإجمالي", cart_checkout:"إتمام الشراء 💳",
     empty_cart:"🛍️<br>سلتك فاضية دلوقتي<br>ابدأي التسوق!",
     toast_added: (n)=>`تمت إضافة "${n}" إلى السلة 🛍️`,
     toast_empty:"السلة فاضية!", toast_order:"هيتم تحويلك للواتساب لتأكيد طلبك 🌸",
     toast_sub:"تم الاشتراك بنجاح! كود الخصم: LUREEM15 🎉",
     currency:"ج.م", title:"لوريم | اكسسوارات • برفيومات • سكين كير",
+    trust1_t:"أصلي 100%", trust1_s:"ضمان الجودة والمنشأ",
+    trust2_t:"دفع آمن", trust2_s:"عند الاستلام أو أونلاين",
+    trust3_t:"استبدال سهل", trust3_s:"خلال 14 يوم من الاستلام",
+    trust4_t:"توصيل سريع", trust4_s:"لكل محافظات مصر",
+    installment_badge:(n)=>`أو 3 دفعات × ${n} ج.م 💳`,
+    gift_wrap_title:"🎁 لفي طلبك كهدية", gift_wrap_sub:(fee)=>`تغليف فاخر + كارت تهنئة — ${fee} ج.م`,
+    gift_msg_ph:"اكتبي رسالة الإهداء هنا (اختياري)...",
+    gift_wrap_line:"تغليف هدية",
+    payment_method_label:"طريقة الدفع",
+    pm_cod:"الدفع عند الاستلام", pm_cod_sub:"ادفعي كاش لما يوصلك الأوردر",
+    pm_card:"فيزا / ماستركارد", pm_card_sub:"هيتم تأكيد رابط الدفع عبر واتساب",
+    pm_wallet:"محفظة إلكترونية", pm_wallet_sub:"فودافون كاش وغيرها",
+    payment_method_order_label:"طريقة الدفع",
+    delivery_est:(d)=>`🚚 التوصيل المتوقع: ${d}`,
+    fbt_title:"يُشترى معه غالباً", fbt_add_btn:"أضيفي الكل للسلة 🛒", fbt_total_label:"الإجمالي لو أخدتي الكل سوا",
+    qa_title:"أسئلة العملاء", qa_ask_btn:"اسألي عن المنتج", qa_name_ph:"اسمك (اختياري)",
+    qa_text_ph:"اكتبي سؤالك هنا...", qa_submit_btn:"إرسال السؤال", qa_none_msg:"لسه مفيش أسئلة، كوني أول من تسأل!",
+    qa_pending:"⏳ هيتم الرد عليكِ قريباً من فريقنا", qa_empty_toast:"من فضلك اكتبي سؤالك", qa_added_toast:"تم إرسال سؤالك، هنرد عليكِ قريباً 💬",
     search_ph:"ابحثي عن منتج...", search_empty:"مفيش نتائج مطابقة", search_hint:"ابدئي بالكتابة عشان تشوفي المنتجات",
     wish_title:"المفضلة", wish_empty:"🤍<br>لسه مفيش حاجة في المفضلة<br>دوسي على القلب في أي منتج!",
     toast_wish_add:(n)=>`تمت إضافة "${n}" للمفضلة ❤️`, toast_wish_remove:(n)=>`تمت إزالة "${n}" من المفضلة`,
@@ -1935,7 +2119,7 @@ const T = {
     menu_location:"موقعنا", menu_hours:"مواعيد العمل", menu_newsletter_title:"اشتركي في نشرتنا",
     order_msg_title:"🌸 طلب جديد من متجر لوريم",
     checkout_title:"بيانات الطلب", field_name:"الاسم بالكامل", field_phone:"رقم الموبايل",
-    field_address:"العنوان بالتفصيل", field_notes:"ملاحظات (اختياري)", confirm_order_btn:"تأكيد الطلب",
+    field_address:"العنوان بالتفصيل", field_notes:"ملاحظات (اختياري)", confirm_order_btn:"تأكيد الطلب ✅",
     quick_view:"عرض سريع 👁️", stock_in:"متوفر", stock_low:"كمية محدودة", stock_out:"نفذت الكمية",
     desc_title:"📋 الوصف", howto_title:"✅ طريقة الاستخدام",
     sort_label:"ترتيب حسب", sort_default:"الأكثر تميزاً", sort_price_asc:"السعر: من الأقل للأعلى",
@@ -2108,12 +2292,30 @@ const T = {
     foot_links:"Quick Links", foot_service:"Customer Service", foot_return:"Return Policy", foot_shipping:"Shipping & Delivery",
     foot_faq:"FAQ", foot_contact_us:"Contact Us", foot_contact:"Get in Touch",
     foot_loc:"📍 Cairo, Egypt", foot_hours:"🕐 Daily 10AM - 10PM", foot_copy:"© 2026 Lureem. All rights reserved.",
-    cart_title:"Shopping Cart", cart_total:"Total", cart_checkout:"Checkout",
+    cart_title:"Shopping Cart", cart_total:"Total", cart_checkout:"Checkout 💳",
     empty_cart:"🛍️<br>Your cart is empty<br>Start shopping!",
     toast_added: (n)=>`"${n}" added to your cart 🛍️`,
     toast_empty:"Your cart is empty!", toast_order:"You'll be redirected to WhatsApp to confirm your order 🌸",
     toast_sub:"Subscribed successfully! Discount code: LUREEM15 🎉",
     currency:"EGP", title:"Lureem | Accessories • Perfumes • Skincare",
+    trust1_t:"100% Authentic", trust1_s:"Guaranteed quality & origin",
+    trust2_t:"Secure Payment", trust2_s:"Cash on delivery or online",
+    trust3_t:"Easy Returns", trust3_s:"Within 14 days of delivery",
+    trust4_t:"Fast Delivery", trust4_s:"To all governorates of Egypt",
+    installment_badge:(n)=>`or 3 payments of ${n} EGP 💳`,
+    gift_wrap_title:"🎁 Gift wrap my order", gift_wrap_sub:(fee)=>`Premium wrap + greeting card — ${fee} EGP`,
+    gift_msg_ph:"Write your gift message here (optional)...",
+    gift_wrap_line:"Gift wrapping",
+    payment_method_label:"Payment Method",
+    pm_cod:"Cash on Delivery", pm_cod_sub:"Pay in cash when your order arrives",
+    pm_card:"Visa / Mastercard", pm_card_sub:"Payment link will be confirmed via WhatsApp",
+    pm_wallet:"Mobile Wallet", pm_wallet_sub:"Vodafone Cash and others",
+    payment_method_order_label:"Payment Method",
+    delivery_est:(d)=>`🚚 Estimated delivery: ${d}`,
+    fbt_title:"Frequently Bought Together", fbt_add_btn:"Add all to cart 🛒", fbt_total_label:"Total if bought together",
+    qa_title:"Customer Questions", qa_ask_btn:"Ask about this product", qa_name_ph:"Your name (optional)",
+    qa_text_ph:"Write your question here...", qa_submit_btn:"Submit question", qa_none_msg:"No questions yet — be the first to ask!",
+    qa_pending:"⏳ Our team will answer soon", qa_empty_toast:"Please write your question", qa_added_toast:"Your question has been sent, we'll reply soon 💬",
     search_ph:"Search for a product...", search_empty:"No matching results", search_hint:"Start typing to see products",
     wish_title:"Wishlist", wish_empty:"🤍<br>Your wishlist is empty<br>Tap the heart on any product!",
     toast_wish_add:(n)=>`"${n}" added to your wishlist ❤️`, toast_wish_remove:(n)=>`"${n}" removed from your wishlist`,
@@ -2121,7 +2323,7 @@ const T = {
     menu_location:"Location", menu_hours:"Working Hours", menu_newsletter_title:"Join Our Newsletter",
     order_msg_title:"🌸 New order from Lureem",
     checkout_title:"Order Details", field_name:"Full Name", field_phone:"Phone Number",
-    field_address:"Delivery Address", field_notes:"Notes (optional)", confirm_order_btn:"Confirm Order",
+    field_address:"Delivery Address", field_notes:"Notes (optional)", confirm_order_btn:"Confirm Order ✅",
     quick_view:"Quick View 👁️", stock_in:"In Stock", stock_low:"Low Stock", stock_out:"Out of Stock",
     desc_title:"📋 Description", howto_title:"✅ How to Use",
     sort_label:"Sort by", sort_default:"Featured", sort_price_asc:"Price: Low to High",
@@ -2793,6 +2995,7 @@ let loyaltyLifetime = parseInt(localStorage.getItem('lureem_points_lifetime') ||
 let loyaltyRedeemedAmount = 0; // resets every checkout/session, applies to current cart only
 let compareList = JSON.parse(localStorage.getItem('lureem_compare') || '[]');
 let userReviews = JSON.parse(localStorage.getItem('lureem_reviews') || '{}');
+let userQuestions = JSON.parse(localStorage.getItem('lureem_questions') || '{}');
 let notifyList = JSON.parse(localStorage.getItem('lureem_notify') || '[]');
 let ordersList = JSON.parse(localStorage.getItem('lureem_orders') || '[]');
 let referralCode = localStorage.getItem('lureem_ref_code') || '';
@@ -2829,6 +3032,7 @@ function persistState(){
   localStorage.setItem('lureem_recent', JSON.stringify(recentlyViewed));
   localStorage.setItem('lureem_compare', JSON.stringify(compareList));
   localStorage.setItem('lureem_reviews', JSON.stringify(userReviews));
+  localStorage.setItem('lureem_questions', JSON.stringify(userQuestions));
   localStorage.setItem('lureem_notify', JSON.stringify(notifyList));
   localStorage.setItem('lureem_orders', JSON.stringify(ordersList));
   localStorage.setItem('lureem_points', String(loyaltyPoints));
@@ -3325,6 +3529,8 @@ function applyTranslations(){
   renderCompareBar();
   initReferral();
   initPriceRange();
+  updateGiftWrapSub();
+  if(document.getElementById('checkoutDrawer').classList.contains('show')) renderOrderSummary();
   if(qvCurrentId !== null && document.getElementById('qvOverlay').classList.contains('show')) renderQuickView();
   if(document.getElementById('loyaltyDrawer').classList.contains('show')) renderLoyalty();
   if(document.getElementById('compareOverlay').classList.contains('show')) renderCompareTable();
@@ -3356,6 +3562,12 @@ function stockBadgeHtml(stock, count){
 
 function effectivePrice(p){
   return (p.flashDeal && flashSaleActive) ? p.dealPrice : p.price;
+}
+
+function installmentHtml(price){
+  if(price < 300) return '';
+  const per = Math.ceil(price / 3);
+  return `<span class="installment-badge">${t('installment_badge')(per)}</span>`;
 }
 
 function sortList(list){
@@ -3397,6 +3609,7 @@ function renderProducts(){
       <div class="p-body">
         <div class="p-name">${p.name[currentLang]}</div>
         <div class="p-price">${price} ${t('currency')} ${wasPrice ? `<small>${wasPrice} ${t('currency')}</small>` : ''}</div>
+        ${installmentHtml(price)}
       </div>
     </div>
   `;}).join('');
@@ -3684,6 +3897,96 @@ function addToCartFromQv(){
   closeQuickView();
 }
 
+/* ================= FREQUENTLY BOUGHT TOGETHER ================= */
+function renderFBTSection(p, related){
+  if(related.length === 0) return '';
+  const items = [p, ...related.slice(0,2)];
+  const rows = items.map((it,idx) => `
+    <div class="fbt-item">
+      <div class="fbt-icon">${pVisual(it)}</div>
+      <label><input type="checkbox" class="fbt-check" data-price="${effectivePrice(it)}" data-id="${it.id}" ${idx===0 ? 'checked disabled' : 'checked onchange="updateFbtTotal()"'}> ${it.name[currentLang]}</label>
+      <div class="fbt-price">${effectivePrice(it)} ${t('currency')}</div>
+    </div>
+  `).join(`<div class="fbt-plus">+</div>`);
+  const total = items.reduce((s,i) => s + effectivePrice(i), 0);
+  return `
+    <div class="fbt-section">
+      <h4>${t('fbt_title')}</h4>
+      <div class="fbt-items">${rows}</div>
+      <div class="fbt-footer">
+        <div class="fbt-total"><small>${t('fbt_total_label')}</small>${total} ${t('currency')}<span id="fbtTotalVal" style="display:none;">${total}</span></div>
+        <button class="btn btn-primary" onclick="addFbtToCart()">${t('fbt_add_btn')}</button>
+      </div>
+    </div>
+  `;
+}
+function updateFbtTotal(){
+  const checks = document.querySelectorAll('.fbt-check:checked');
+  let total = 0;
+  checks.forEach(c => total += Number(c.dataset.price));
+  const holder = document.querySelector('.fbt-total');
+  if(holder) holder.innerHTML = `<small>${t('fbt_total_label')}</small>${total} ${t('currency')}<span id="fbtTotalVal" style="display:none;">${total}</span>`;
+}
+function addFbtToCart(){
+  const checks = document.querySelectorAll('.fbt-check:checked');
+  checks.forEach(c => {
+    const id = Number(c.dataset.id);
+    const product = PRODUCTS.find(p => p.id === id);
+    if(!product || product.stock === 'out') return;
+    const priceNow = effectivePrice(product);
+    const existing = cart.find(i => i.id === id);
+    if(existing) existing.qty += 1;
+    else cart.push({...product, price:priceNow, qty:1});
+  });
+  updateCart();
+  persistState();
+  pulseCartIcon();
+  showToast(t('toast_added')(t('fbt_title')));
+  closeQuickView();
+  toggleCart(true);
+}
+
+/* ================= CUSTOMER Q&A ================= */
+function toggleQAForm(pid){
+  const form = document.getElementById('qaForm');
+  if(!form) return;
+  form.classList.toggle('show');
+}
+function submitProductQuestion(pid){
+  const nameInput = document.getElementById('qaNameInput');
+  const textInput = document.getElementById('qaTextInput');
+  const text = textInput.value.trim();
+  if(!text){ showToast(t('qa_empty_toast')); return; }
+  const name = nameInput.value.trim() || (currentLang === 'ar' ? 'زائر' : 'Guest');
+  if(!userQuestions[pid]) userQuestions[pid] = [];
+  userQuestions[pid].unshift({name, text, date:Date.now()});
+  persistState();
+  nameInput.value = ''; textInput.value = '';
+  showToast(t('qa_added_toast'));
+  renderQuickView();
+}
+function renderQASection(p){
+  const qs = userQuestions[p.id] || [];
+  return `
+    <div class="qv-reviews">
+      <h4>${t('qa_title')}</h4>
+      <button class="review-write-btn" onclick="toggleQAForm(${p.id})">${t('qa_ask_btn')}</button>
+      <div class="review-form" id="qaForm">
+        <input type="text" id="qaNameInput" placeholder="${t('qa_name_ph')}">
+        <textarea id="qaTextInput" rows="2" placeholder="${t('qa_text_ph')}"></textarea>
+        <button class="btn btn-primary" style="justify-content:center;" onclick="submitProductQuestion(${p.id})">${t('qa_submit_btn')}</button>
+      </div>
+      ${qs.length === 0 ? `<div class="review-empty">${t('qa_none_msg')}</div>` : qs.map(q => `
+        <div class="qa-item">
+          <div class="qa-q">❓ ${q.text}</div>
+          <div class="qa-a">${t('qa_pending')}</div>
+          <div class="qa-meta">— ${q.name}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function renderQuickView(){
   const p = PRODUCTS.find(x => x.id === qvCurrentId);
   if(!p) return;
@@ -3699,7 +4002,9 @@ function renderQuickView(){
     <div class="p-rating"><span class="stars">${renderStars(ratingInfo.avg)}</span><span class="rcount">${ratingInfo.avg} (${ratingInfo.count} ${t('reviews_word')})</span></div>
     <div class="qv-desc">${p.desc[currentLang]}</div>
     ${stockBadgeHtml(p.stock, p.stockCount)}
+    ${deliveryEstimate(p)}
     <div class="qv-price">${price} ${t('currency')} ${wasPrice ? `<small>${wasPrice} ${t('currency')}</small>` : ''}</div>
+    ${installmentHtml(price)}
     <div class="qv-qty-row">
       <span>${t('qty_label')}</span>
       <div class="qv-stepper">
@@ -3738,6 +4043,8 @@ function renderQuickView(){
         `).join('')}
       </div>
     </div>` : ''}
+    ${renderFBTSection(p, related)}
+    ${renderQASection(p)}
     ${renderReviewsSection(p)}
   `;
 }
@@ -3785,6 +4092,25 @@ function toggleMenu(show){
 }
 document.getElementById('menuBtn').addEventListener('click', () => toggleMenu(true));
 
+/* ---- Tactile press feedback (ripple) for primary CTA buttons ---- */
+function attachRipple(el){
+  if(!el) return;
+  el.addEventListener('pointerdown', function(e){
+    const rect = el.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    ripple.style.width = ripple.style.height = size + 'px';
+    const x = (e.clientX || rect.left + rect.width/2) - rect.left - size/2;
+    const y = (e.clientY || rect.top + rect.height/2) - rect.top - size/2;
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    el.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 650);
+  });
+}
+document.querySelectorAll('.cta-ripple').forEach(attachRipple);
+
 function subscribeFromMenu(e){
   e.preventDefault();
   showToast(t('toast_sub'));
@@ -3793,25 +4119,81 @@ function subscribeFromMenu(e){
 }
 
 const WHATSAPP_NUMBER = "201015347940";
+const GIFT_WRAP_FEE = 25;
+let giftWrapSelected = false;
+let paymentMethod = 'cod';
 
-function openCheckoutForm(){
-  if(cart.length === 0){ showToast(t('toast_empty')); return; }
-  toggleCart(false);
+function selectPaymentMethod(method){
+  paymentMethod = method;
+  document.querySelectorAll('.pm-option').forEach(el => {
+    el.classList.toggle('selected', el.getAttribute('data-pm') === method);
+  });
+}
+
+function deliveryEstimate(p){
+  const days = p.stock === 'out' ? 0 : (p.stock === 'low' ? 4 : 2);
+  if(days === 0) return '';
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  const locale = currentLang === 'ar' ? 'ar-EG' : 'en-GB';
+  const formatted = d.toLocaleDateString(locale, {weekday:'long', day:'numeric', month:'long'});
+  return `<div class="delivery-est">${t('delivery_est')(formatted)}</div>`;
+}
+
+function computeOrderTotals(){
   const subtotal = calcSubtotal();
   const couponD = calcCouponDiscount(subtotal);
   const referralD = calcReferralDiscount(subtotal);
   const loyaltyD = Math.min(loyaltyRedeemedAmount, Math.max(subtotal - couponD - referralD, 0));
   const discount = couponD + referralD + loyaltyD;
-  const total = Math.max(subtotal - discount, 0);
+  const giftFee = giftWrapSelected ? GIFT_WRAP_FEE : 0;
+  const total = Math.max(subtotal - discount, 0) + giftFee;
+  return { subtotal, couponD, referralD, loyaltyD, discount, giftFee, total };
+}
+
+function renderOrderSummary(){
+  const { couponD, referralD, loyaltyD, giftFee, total } = computeOrderTotals();
   const summary = document.getElementById('orderSummary');
   let extraLines = '';
   if(couponD > 0) extraLines += `<div class="os-item"><span>${t('cart_discount')} (${appliedCoupon})</span><span>-${couponD} ${t('currency')}</span></div>`;
   if(referralD > 0) extraLines += `<div class="os-item"><span>🎀 ${t('referral_title')}</span><span>-${referralD} ${t('currency')}</span></div>`;
   if(loyaltyD > 0) extraLines += `<div class="os-item"><span>🎁 ${t('loyalty_title')}</span><span>-${loyaltyD} ${t('currency')}</span></div>`;
+  if(giftFee > 0) extraLines += `<div class="os-item"><span>🎁 ${t('gift_wrap_line')}</span><span>+${giftFee} ${t('currency')}</span></div>`;
+  extraLines += `<div class="os-item"><span>${t('payment_method_order_label')}</span><span>${t('pm_' + paymentMethod)}</span></div>`;
   summary.innerHTML = cart.map(i => `
     <div class="os-item"><span>${i.name[currentLang]} × ${i.qty}</span><span>${i.price * i.qty} ${t('currency')}</span></div>
   `).join('') + extraLines
     + `<div class="os-total"><span>${t('cart_total')}</span><span>${total} ${t('currency')}</span></div>`;
+  const footTotal = document.getElementById('checkoutFootTotal');
+  if(footTotal) footTotal.textContent = `${total} ${t('currency')}`;
+}
+
+function updateGiftWrapSub(){
+  const subEl = document.getElementById('giftWrapSub');
+  if(subEl) subEl.textContent = t('gift_wrap_sub')(GIFT_WRAP_FEE);
+}
+
+function toggleGiftWrap(){
+  giftWrapSelected = document.getElementById('giftWrapCheck').checked;
+  document.getElementById('giftOptionBox').classList.toggle('active', giftWrapSelected);
+  renderOrderSummary();
+}
+
+function openCheckoutForm(){
+  if(cart.length === 0){ showToast(t('toast_empty')); return; }
+  toggleCart(false);
+  giftWrapSelected = false;
+  paymentMethod = 'cod';
+  const gwCheck = document.getElementById('giftWrapCheck');
+  if(gwCheck) gwCheck.checked = false;
+  const gwMsg = document.getElementById('giftMessageInput');
+  if(gwMsg) gwMsg.value = '';
+  document.getElementById('giftOptionBox').classList.remove('active');
+  const codRadio = document.querySelector('input[name="paymentMethod"][value="cod"]');
+  if(codRadio) codRadio.checked = true;
+  selectPaymentMethod('cod');
+  updateGiftWrapSub();
+  renderOrderSummary();
   toggleCheckout(true);
 }
 
@@ -3820,35 +4202,44 @@ function toggleCheckout(show){
   document.getElementById('checkoutOverlay').classList.toggle('show', show);
 }
 
+let checkoutSubmitting = false;
+function isMobileDevice(){
+  return window.matchMedia('(max-width:768px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
 function submitOrder(e){
   e.preventDefault();
+  if(checkoutSubmitting) return;
+  checkoutSubmitting = true;
+  const submitBtn = document.getElementById('checkoutSubmitBtn');
+  if(submitBtn) submitBtn.classList.add('loading');
+
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
   const address = document.getElementById('custAddress').value.trim();
   const notes = document.getElementById('custNotes').value.trim();
+  const giftMsg = document.getElementById('giftMessageInput').value.trim();
 
-  const subtotal = calcSubtotal();
-  const couponD = calcCouponDiscount(subtotal);
-  const referralD = calcReferralDiscount(subtotal);
-  const loyaltyD = Math.min(loyaltyRedeemedAmount, Math.max(subtotal - couponD - referralD, 0));
-  const discount = couponD + referralD + loyaltyD;
-  const total = Math.max(subtotal - discount, 0);
+  const { couponD, referralD, loyaltyD, giftFee, total } = computeOrderTotals();
   const lines = cart.map(i => `${i.name[currentLang]}  x${i.qty}  —  ${i.price * i.qty} ${t('currency')}`).join('\n');
 
   let discountLines = '';
   if(couponD > 0) discountLines += `${t('cart_discount')} (${appliedCoupon}): -${couponD} ${t('currency')}\n`;
   if(referralD > 0) discountLines += `${t('referral_title')}: -${referralD} ${t('currency')}\n`;
   if(loyaltyD > 0) discountLines += `${t('loyalty_title')}: -${loyaltyD} ${t('currency')}\n`;
+  if(giftFee > 0) discountLines += `${t('gift_wrap_line')}: +${giftFee} ${t('currency')}\n`;
 
   const message =
     `${t('order_msg_title')}\n\n` +
     `${lines}\n\n` +
     discountLines +
     `${t('cart_total')}: ${total} ${t('currency')}\n\n` +
+    `${t('payment_method_order_label')}: ${t('pm_' + paymentMethod)}\n` +
     `${t('field_name')}: ${name}\n` +
     `${t('field_phone')}: ${phone}\n` +
     `${t('field_address')}: ${address}` +
-    (notes ? `\n${t('field_notes')}: ${notes}` : '');
+    (notes ? `\n${t('field_notes')}: ${notes}` : '') +
+    (giftWrapSelected ? `\n🎁 ${t('gift_wrap_line')}${giftMsg ? ` — "${giftMsg}"` : ''}` : '');
 
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
@@ -3858,6 +4249,8 @@ function submitOrder(e){
   appliedCoupon = null;
   referralApplied = false;
   loyaltyRedeemedAmount = 0;
+  giftWrapSelected = false;
+  paymentMethod = 'cod';
   document.getElementById('couponInput').value = '';
   document.getElementById('couponMsg').textContent = '';
   const refMsgEl = document.getElementById('referralMsg');
@@ -3868,9 +4261,16 @@ function submitOrder(e){
   persistState();
   toggleCheckout(false);
   e.target.reset();
-  window.open(waUrl, '_blank');
+  /* On mobile, redirect in the same tab so the WhatsApp app opens directly
+     instead of a new tab that mobile browsers often fail to hand off. */
+  if(isMobileDevice()) location.href = waUrl;
+  else window.open(waUrl, '_blank');
   showToast(t('toast_order'));
   if(earnedPts > 0) setTimeout(() => showToast(t('lp_earned_toast')(earnedPts)), 3000);
+  setTimeout(() => {
+    checkoutSubmitting = false;
+    if(submitBtn) submitBtn.classList.remove('loading');
+  }, 1200);
 }
 
 function subscribe(e){
