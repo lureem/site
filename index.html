@@ -291,7 +291,7 @@
   }
   .overlay.show{opacity:1; pointer-events:auto;}
   .drawer{
-    position:fixed; top:0; right:0; height:100%; width:400px; max-width:90vw; background:#fff; z-index:95;
+    position:fixed; top:0; right:0; height:100vh; height:100dvh; width:400px; max-width:90vw; background:#fff; z-index:95;
     transform:translateX(100%); transition:transform .35s cubic-bezier(.2,.9,.3,1), right .01s, left .01s; display:flex; flex-direction:column;
     box-shadow:-10px 0 30px rgba(0,0,0,.15);
   }
@@ -300,7 +300,12 @@
   html.lang-en .drawer.show{transform:translateX(0);}
   .drawer-head{display:flex; justify-content:space-between; align-items:center; padding:22px; border-bottom:1px solid var(--line);}
   .drawer-head h3{color:var(--rose-deep); font-size:1.3rem;}
-  .close-btn{font-size:1.4rem; color:#8a6a78;}
+  .close-btn{
+    width:36px; height:36px; border-radius:50%; background:var(--bg); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:1rem; color:#8a6a78;
+    transition:transform .2s, background .2s, color .2s; flex-shrink:0;
+  }
+  .close-btn:hover{transform:translateY(-2px) rotate(90deg); background:var(--blush); color:var(--rose-deep);}
   .drawer-body{flex:1; overflow-y:auto; padding:16px 22px;}
   .cart-item{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); align-items:center;}
   .ci-img{width:60px; height:60px; border-radius:12px; background:var(--blush); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;}
@@ -310,7 +315,7 @@
   .ci-qty{display:flex; align-items:center; gap:8px;}
   .qty-btn{width:24px; height:24px; border-radius:50%; background:var(--bg); border:1px solid var(--line); font-size:.9rem; display:flex; align-items:center; justify-content:center;}
   .empty-cart{text-align:center; color:#8a6a78; padding:60px 20px; font-size:.9rem;}
-  .drawer-foot{padding:22px; border-top:1px solid var(--line);}
+  .drawer-foot{padding:22px; border-top:1px solid var(--line); position:sticky; bottom:0; background:#fff; z-index:2; flex-shrink:0;}
   .cart-total{display:flex; justify-content:space-between; font-weight:700; margin-bottom:16px; font-size:1.05rem;}
   .cart-total span:last-child{color:var(--rose-deep); font-family:'Lalezar'; font-size:1.3rem;}
 
@@ -620,6 +625,8 @@
   html.dark .drawer, html.dark .qv-modal, html.dark .search-panel, html.dark .promo-popup,
   html.dark .flash-card, html.dark .compare-bar, html.dark .compare-modal, html.dark .wheel-card,
   html.dark .notify-card, html.dark .track-card, html.dark .sp-toast, html.dark .toast{background:#241a20; color:var(--plum);}
+  html.dark .drawer-foot{background:#241a20;}
+  html.dark .close-btn{background:#2a1e26; border-color:var(--line); color:var(--plum);}
   html.dark .qv-stepper button, html.dark .sort-select, html.dark .filter-btn, html.dark .qty-btn,
   html.dark .adv-filters-toggle, html.dark .rating-filter-wrap select{background:#2a1e26; color:var(--plum); border-color:var(--line);}
   html.dark .n-form input, html.dark .checkout-form input, html.dark .checkout-form textarea,
@@ -1415,22 +1422,22 @@
       <a href="javascript:void(0)" onclick="goTo('footer')" data-i18n="nav_contact">تواصل معنا</a>
     </nav>
     <div class="nav-actions">
-      <button class="icon-btn lang-btn" id="langBtn" title="Language">EN</button>
-      <button class="icon-btn" id="darkBtn" title="الوضع الليلي">🌙</button>
-      <button class="icon-btn" id="searchBtn" title="بحث">🔍</button>
-      <button class="icon-btn" id="loyaltyBtn" title="نقاط الولاء">
+      <button class="icon-btn lang-btn" id="langBtn" title="Language" aria-label="Language">EN</button>
+      <button class="icon-btn" id="darkBtn" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button>
+      <button class="icon-btn" id="searchBtn" title="بحث" aria-label="بحث">🔍</button>
+      <button class="icon-btn" id="loyaltyBtn" title="نقاط الولاء" aria-label="نقاط الولاء">
         🎁
         <span class="loyalty-badge" id="loyaltyBadge">0</span>
       </button>
-      <button class="icon-btn" id="wishBtn" title="المفضلة">
+      <button class="icon-btn" id="wishBtn" title="المفضلة" aria-label="المفضلة">
         🤍
         <span class="cart-count" id="wishCount">0</span>
       </button>
-      <button class="icon-btn" id="cartBtn" title="السلة">
+      <button class="icon-btn" id="cartBtn" title="السلة" aria-label="السلة">
         🛍️
         <span class="cart-count" id="cartCount">0</span>
       </button>
-      <button class="icon-btn" id="menuBtn" title="القائمة والتواصل">☰</button>
+      <button class="icon-btn" id="menuBtn" title="القائمة والتواصل" aria-label="القائمة والتواصل">☰</button>
     </div>
   </div>
 </header>
@@ -1746,7 +1753,7 @@
 <div class="drawer" id="drawer">
   <div class="drawer-head">
     <h3 data-i18n="cart_title">سلة المشتريات</h3>
-    <button class="close-btn" onclick="toggleCart(false)">✕</button>
+    <button class="close-btn" onclick="toggleCart(false)" aria-label="إغلاق السلة">✕</button>
   </div>
   <div class="ship-progress" id="shipProgressCart"></div>
   <div class="drawer-body" id="drawerBody"></div>
@@ -1769,7 +1776,7 @@
   <div class="search-panel-inner">
     <div class="search-top">
       <input type="text" id="searchInput" data-i18n-ph="search_ph" placeholder="ابحثي عن منتج..." oninput="doSearch()">
-      <button class="close-btn" onclick="toggleSearch(false)">✕</button>
+      <button class="close-btn" onclick="toggleSearch(false)" aria-label="إغلاق البحث">✕</button>
     </div>
     <div class="search-results" id="searchResults"></div>
   </div>
@@ -1780,7 +1787,7 @@
 <div class="drawer" id="wishDrawer">
   <div class="drawer-head">
     <h3 data-i18n="wish_title">المفضلة</h3>
-    <button class="close-btn" onclick="toggleWish(false)">✕</button>
+    <button class="close-btn" onclick="toggleWish(false)" aria-label="إغلاق المفضلة">✕</button>
   </div>
   <div class="drawer-body" id="wishBody"></div>
 </div>
@@ -1790,7 +1797,7 @@
 <div class="drawer" id="menuDrawer">
   <div class="drawer-head">
     <h3 data-i18n="menu_title">القائمة والتواصل</h3>
-    <button class="close-btn" onclick="toggleMenu(false)">✕</button>
+    <button class="close-btn" onclick="toggleMenu(false)" aria-label="إغلاق القائمة">✕</button>
   </div>
   <div class="drawer-body">
     <div class="menu-links">
@@ -1868,7 +1875,7 @@
 <div class="drawer checkout-drawer" id="checkoutDrawer">
   <div class="drawer-head">
     <h3 data-i18n="checkout_title">بيانات الطلب</h3>
-    <button class="close-btn" onclick="toggleCheckout(false)">✕</button>
+    <button class="close-btn" onclick="toggleCheckout(false)" aria-label="إغلاق بيانات الطلب">✕</button>
   </div>
   <div class="drawer-body">
     <div class="order-summary" id="orderSummary"></div>
@@ -1980,7 +1987,7 @@
 <div class="drawer" id="loyaltyDrawer">
   <div class="drawer-head">
     <h3 data-i18n="loyalty_title">نقاط الولاء</h3>
-    <button class="close-btn" onclick="toggleLoyalty(false)">✕</button>
+    <button class="close-btn" onclick="toggleLoyalty(false)" aria-label="إغلاق نقاط الولاء">✕</button>
   </div>
   <div class="drawer-body" id="loyaltyBody"></div>
 </div>
